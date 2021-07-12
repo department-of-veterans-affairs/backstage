@@ -48,9 +48,16 @@ export class TaskWorker {
       return JSON.stringify(parseRepoUrl(repoUrl));
     });
 
+    this.handlebars.registerHelper('projectSlug', repoUrl => {
+      const { owner, repo } = parseRepoUrl(repoUrl);
+      return `${owner}/${repo}`;
+    });
+
     this.handlebars.registerHelper('json', obj => JSON.stringify(obj));
 
     this.handlebars.registerHelper('not', value => !isTruthy(value));
+
+    this.handlebars.registerHelper('eq', (a, b) => a === b);
   }
 
   start() {
